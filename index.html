@@ -32,9 +32,12 @@ a{color:inherit}
 /* nav */
 .nav{position:sticky;top:0;z-index:20;background:rgba(11,27,50,.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.08);transition:transform .25s ease;will-change:transform}
 .nav.nav--hide{transform:translateY(-100%)}
-.nav .wrap{display:flex;gap:6px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
-.nav a{font-size:12.5px;color:#c4d0e0;text-decoration:none;padding:5px 11px;border-radius:999px;white-space:nowrap}
-.nav a:hover{background:var(--orange);color:#fff}
+.navbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.navbrand{display:none}
+.navtoggle{display:none}
+.navlinks{display:flex;gap:6px;flex-wrap:wrap}
+.navlinks a{font-size:12.5px;color:#c4d0e0;text-decoration:none;padding:5px 11px;border-radius:999px;white-space:nowrap}
+.navlinks a:hover{background:var(--orange);color:#fff}
 .sec{scroll-margin-top:56px}
 
 /* skills */
@@ -93,10 +96,16 @@ footer b{color:#fff}
   .grid,.minigrid,.skills .wrap{grid-template-columns:1fr}
   .hero h1{font-size:34px}
   .wrap{padding:0 16px}
-  /* 固定ナビはスマホでは折り返さず横1行・横スクロール（高さを1行に抑える） */
-  .nav .wrap{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-top:8px;padding-bottom:8px;scrollbar-width:none;-ms-overflow-style:none}
-  .nav .wrap::-webkit-scrollbar{display:none}
-  .nav a{padding:5px 12px}
+  /* 固定ナビはスマホではハンバーガー化（通常は細いバー1本のみ） */
+  .navbar{flex-wrap:nowrap;padding-top:8px;padding-bottom:8px}
+  .navbrand{display:block;color:#fff;font-weight:700;font-size:14px;text-decoration:none;margin-right:auto;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .navtoggle{display:inline-flex;align-items:center;gap:7px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:9px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0}
+  .navtoggle:active{background:rgba(255,255,255,.08)}
+  .navtoggle-ico{font-size:15px;line-height:1}
+  .navlinks{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;background:rgba(9,22,42,.99);border-bottom:1px solid rgba(255,255,255,.1);max-height:72vh;overflow-y:auto;padding:6px 16px 12px;box-shadow:0 14px 30px rgba(0,0,0,.35);-webkit-overflow-scrolling:touch}
+  .nav--open .navlinks{display:flex}
+  .navlinks a{font-size:14.5px;padding:12px 4px;border-radius:0;border-bottom:1px solid rgba(255,255,255,.07);white-space:normal}
+  .navlinks a:last-child{border-bottom:0}
   /* 余白を詰めて表示領域を確保 */
   .hero{padding:40px 0 30px}
   .statline{gap:22px;margin-top:20px}
@@ -117,7 +126,7 @@ footer b{color:#fff}
 </head>
 <body>
 
-<header class="hero">
+<header class="hero" id="top">
   <div class="wrap">
     <div class="role">AIソリューション開発ポートフォリオ</div>
     <h1>Y.TK</h1>
@@ -131,7 +140,11 @@ footer b{color:#fff}
   </div>
 </header>
 
-<nav class="nav"><div class="wrap"><a href="#product">フルスタック・プロダクト開発（個人）</a><a href="#vision">コンピュータビジョン / OCR / 文書AI</a><a href="#agent">LLMエージェント / RAG / 自動化基盤</a><a href="#data">データ収集・分析・スクレイピング</a><a href="#work">在職中の業務AI開発（顧客名非開示）</a><a href="#proposals">顧客提案・PoC（社名非開示）</a><a href="#internal">現職 社内自動化・AI基盤（機密）</a><a href="#personal">個人ツール・副業・その他</a><a href="#tools">ツール・基盤（補遺）</a></div></nav>
+<nav class="nav"><div class="wrap navbar">
+  <a class="navbrand" href="#top">Y.TK</a>
+  <button class="navtoggle" type="button" aria-label="カテゴリを開く" aria-expanded="false"><span class="navtoggle-ico" aria-hidden="true">☰</span>カテゴリ</button>
+  <div class="navlinks"><a href="#product">フルスタック・プロダクト開発（個人）</a><a href="#vision">コンピュータビジョン / OCR / 文書AI</a><a href="#agent">LLMエージェント / RAG / 自動化基盤</a><a href="#data">データ収集・分析・スクレイピング</a><a href="#work">在職中の業務AI開発（顧客名非開示）</a><a href="#proposals">顧客提案・PoC（社名非開示）</a><a href="#internal">現職 社内自動化・AI基盤（機密）</a><a href="#personal">個人ツール・副業・その他</a><a href="#tools">ツール・基盤（補遺）</a></div>
+</div></nav>
 
 <section class="skills"><div class="wrap">
   <div class="srow"><span class="k">言語</span><span class="v">TypeScript / JavaScript・Python</span></div><div class="srow"><span class="k">フロント</span><span class="v">React・Vite・LIFF・i18n(多言語)・単一HTML SPA</span></div><div class="srow"><span class="k">バックエンド</span><span class="v">Hono・FastAPI・Cloudflare Workers・Cloud Run</span></div><div class="srow"><span class="k">データ/基盤</span><span class="v">Supabase / PostgreSQL・Drizzle・Stripe・Docker・RLS</span></div><div class="srow"><span class="k">AI / ML</span><span class="v">Claude（Opus 4.8 / Sonnet 4.6 / Haiku 4.5）・YOLOv8・Whisper・Tesseract / EasyOCR・GiNZA(NER)・gemini-embedding・RAG・マルチエージェント・OR-Tools CP-SAT</span></div><div class="srow"><span class="k">自動化</span><span class="v">Playwright / CDP実ブラウザ・スクレイピング・日次バッチ・Claude Code hook</span></div>
@@ -472,14 +485,28 @@ footer b{color:#fff}
 (function(){
   var nav=document.querySelector('.nav');
   if(!nav) return;
+  var toggle=nav.querySelector('.navtoggle');
+  var links=nav.querySelector('.navlinks');
+
+  function closeMenu(){ nav.classList.remove('nav--open'); if(toggle) toggle.setAttribute('aria-expanded','false'); }
+  if(toggle){
+    toggle.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=nav.classList.toggle('nav--open');
+      toggle.setAttribute('aria-expanded', open?'true':'false');
+    });
+  }
+  if(links){ links.addEventListener('click',function(e){ if(e.target.closest('a')) closeMenu(); }); }
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)) closeMenu(); });
+
   var last=window.pageYOffset||0, ticking=false;
   var THRESH=6;              // 微小スクロールでは切り替えない
   function onScroll(){
     var y=window.pageYOffset||document.documentElement.scrollTop||0;
     var dy=y-last;
     if(Math.abs(dy)<THRESH){ ticking=false; return; }
-    if(dy>0 && y>140){        // 下スクロール（heroを過ぎたら）→隠す
-      nav.classList.add('nav--hide');
+    if(dy>0 && y>140){        // 下スクロール（heroを過ぎたら）→隠す＋メニューを閉じる
+      nav.classList.add('nav--hide'); closeMenu();
     }else{                    // 上スクロール→出す
       nav.classList.remove('nav--hide');
     }
