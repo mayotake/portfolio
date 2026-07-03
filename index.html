@@ -30,7 +30,8 @@ a{color:inherit}
 .statline .lab{font-size:12px;color:#9fb0c7;margin-top:6px;letter-spacing:.04em}
 
 /* nav */
-.nav{position:sticky;top:0;z-index:20;background:rgba(11,27,50,.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav{position:sticky;top:0;z-index:20;background:rgba(11,27,50,.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.08);transition:transform .25s ease;will-change:transform}
+.nav.nav--hide{transform:translateY(-100%)}
 .nav .wrap{display:flex;gap:6px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
 .nav a{font-size:12.5px;color:#c4d0e0;text-decoration:none;padding:5px 11px;border-radius:999px;white-space:nowrap}
 .nav a:hover{background:var(--orange);color:#fff}
@@ -466,6 +467,30 @@ footer b{color:#fff}
   <div><b>Y.TK</b> ／ AIソリューション開発ポートフォリオ</div>
   <div>掲載は個人開発が中心。現職案件は顧客名・実データを非開示としています。</div>
 </div></footer>
+
+<script>
+(function(){
+  var nav=document.querySelector('.nav');
+  if(!nav) return;
+  var last=window.pageYOffset||0, ticking=false;
+  var THRESH=6;              // 微小スクロールでは切り替えない
+  function onScroll(){
+    var y=window.pageYOffset||document.documentElement.scrollTop||0;
+    var dy=y-last;
+    if(Math.abs(dy)<THRESH){ ticking=false; return; }
+    if(dy>0 && y>140){        // 下スクロール（heroを過ぎたら）→隠す
+      nav.classList.add('nav--hide');
+    }else{                    // 上スクロール→出す
+      nav.classList.remove('nav--hide');
+    }
+    last=y<0?0:y;
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){
+    if(!ticking){ window.requestAnimationFrame(onScroll); ticking=true; }
+  },{passive:true});
+})();
+</script>
 
 </body>
 </html>
