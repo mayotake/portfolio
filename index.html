@@ -34,6 +34,7 @@ a{color:inherit}
 .nav .wrap{display:flex;gap:6px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
 .nav a{font-size:12.5px;color:#c4d0e0;text-decoration:none;padding:5px 11px;border-radius:999px;white-space:nowrap}
 .nav a:hover{background:var(--orange);color:#fff}
+.sec{scroll-margin-top:56px}
 
 /* skills */
 .skills{background:#fff;border-bottom:1px solid var(--line);padding:30px 0}
@@ -87,7 +88,19 @@ footer{margin-top:60px;background:var(--navy);color:#c4d0e0;padding:34px 0;font-
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer b{color:#fff}
 
-@media(max-width:820px){.grid,.minigrid,.skills .wrap{grid-template-columns:1fr}.hero h1{font-size:34px}}
+@media(max-width:820px){
+  .grid,.minigrid,.skills .wrap{grid-template-columns:1fr}
+  .hero h1{font-size:34px}
+  .wrap{padding:0 16px}
+  /* 固定ナビはスマホでは折り返さず横1行・横スクロール（高さを1行に抑える） */
+  .nav .wrap{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-top:8px;padding-bottom:8px;scrollbar-width:none;-ms-overflow-style:none}
+  .nav .wrap::-webkit-scrollbar{display:none}
+  .nav a{padding:5px 12px}
+  /* 余白を詰めて表示領域を確保 */
+  .hero{padding:40px 0 30px}
+  .statline{gap:22px;margin-top:20px}
+  .sec{padding:36px 0 8px;scroll-margin-top:48px}
+}
 
 @media print{
   body{background:#fff}
